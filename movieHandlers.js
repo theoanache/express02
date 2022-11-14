@@ -59,17 +59,29 @@ const getMovieById = (req, res) => {
     });
 };
 
+const postMovie = (req, res) => {
+ 
+  const { title, director, year, color, duration} = req.body;
 
-  // const movie = movies.find((movie) => movie.id === id);
+  database
+    .query(
+      "INSERT INTO movies(title, director, year, color, duration) VALUES (?, ?, ?, ?, ?)",
+      [title, director, year, color, duration]
+    )
+    .then(([result]) => {
+res.location(`/api/movies/${result.insertId}`).sendStatus(201);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send("Error saving the movie");
+    });
+};
 
-  // if (movie != null) {
-  //   res.json(movie);
-  // } else {
-  //   res.status(404).send("Not Found");
-  // };
+
 
 
 module.exports = {
   getMovies,
   getMovieById,
+  postMovie,
 }
