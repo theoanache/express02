@@ -30,6 +30,17 @@ app.put("/api/users/:id", usersHandlers.updateUser);
 app.delete("/api/movies/:id", movieHandlers.deleteMovie);
 app.delete("/api/users/:id", usersHandlers.deleteUser);
 
+// express04bis
+
+const { validateMovie } = require("./validators.js");
+app.post("/api/movies", validateMovie, movieHandlers.postMovie);
+
+const { validateUser } = require("./validators.js");
+app.post("/api/users", validateUser, usersHandlers.postUser);
+
+// finExpress04bis
+
+
 app.listen(port, (err) => {
   if (err) {
     console.error("Something bad happened");
